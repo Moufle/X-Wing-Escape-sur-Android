@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     MediaPlayer backgroundSound;
     MediaPlayer clickSound;
-    Button easy = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +34,27 @@ public class MainActivity extends AppCompatActivity {
         backgroundSound.setVolume(75, 75);
         backgroundSound.start();
 
-        easy = (Button) this.findViewById(R.id.easyMode);
+        Button easy = (Button) this.findViewById(R.id.easyMode);
+        Button medium = (Button) this.findViewById(R.id.mediumMode);
+        Button hard = (Button) this.findViewById(R.id.hardcoreMode);
 
         easy.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                clickSound = MediaPlayer.create(getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.click_sound));
+                clickSound.setVolume(90, 90);
+                clickSound.start();
+            }
+        });
+
+        medium.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                clickSound = MediaPlayer.create(getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.click_sound));
+                clickSound.setVolume(90, 90);
+                clickSound.start();
+            }
+        });
+
+        hard.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 clickSound = MediaPlayer.create(getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.click_sound));
                 clickSound.setVolume(90, 90);
