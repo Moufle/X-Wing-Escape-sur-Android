@@ -17,20 +17,33 @@ import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
 import android.content.Intent;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    MediaPlayer objPlayer;
-    private static final String LOGCAT = null;
+    MediaPlayer backgroundSound;
+    MediaPlayer clickSound;
+    Button easy = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d(LOGCAT, "Service Started!");
-        objPlayer = MediaPlayer.create(this.getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.home));
-        objPlayer.setLooping(true);
-        objPlayer.start();
+        backgroundSound = MediaPlayer.create(this.getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.home));
+        backgroundSound.setLooping(true);
+        backgroundSound.setVolume(75, 75);
+        backgroundSound.start();
+
+        easy = (Button) this.findViewById(R.id.easyMode);
+
+        easy.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                clickSound = MediaPlayer.create(getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.click_sound));
+                clickSound.setVolume(90, 90);
+                clickSound.start();
+            }
+        });
     }
+
 }
