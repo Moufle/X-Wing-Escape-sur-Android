@@ -173,6 +173,25 @@ public class GameActivity extends AppCompatActivity {
         this.update(rows, columns);
     }
 
+    private void chase(int rows, int columns , String chase){
+
+        //Trouver la position des monstres
+        for (int x = 0; x < rows; x++) {
+            for (int y = 0; y < columns; y++) {
+
+                if (grid[x][y] == 5) {
+
+
+
+                }
+
+            }
+
+
+            //Déplacer les monstres
+        }
+    }
+
     public boolean onTouchEvent(MotionEvent touchEvent)
     {
         switch (touchEvent.getAction())
@@ -255,7 +274,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
+        protected void onPause() {
         super.onPause();
         GameSound.stop();
     }
