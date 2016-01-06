@@ -33,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
                 clickSound = MediaPlayer.create(getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.click_sound));
                 clickSound.setVolume(90, 90);
                 clickSound.start();
+
+                Intent easyGame = new Intent(MainActivity.this, GameActivity.class);
+                easyGame.putExtra("constObject", 12);
+                easyGame.putExtra("constMonster", 6);
+                startActivity(easyGame);
             }
         });
 
@@ -41,6 +46,11 @@ public class MainActivity extends AppCompatActivity {
                 clickSound = MediaPlayer.create(getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.click_sound));
                 clickSound.setVolume(90, 90);
                 clickSound.start();
+
+                Intent mediumGame = new Intent(MainActivity.this, GameActivity.class);
+                mediumGame.putExtra("constObject", 6);
+                mediumGame.putExtra("constMonster", 6);
+                startActivity(mediumGame);
             }
         });
 
@@ -49,8 +59,25 @@ public class MainActivity extends AppCompatActivity {
                 clickSound = MediaPlayer.create(getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.click_sound));
                 clickSound.setVolume(90, 90);
                 clickSound.start();
+
+                Intent hardcoreGame = new Intent(MainActivity.this, GameActivity.class);
+                hardcoreGame.putExtra("constObject", 3);
+                hardcoreGame.putExtra("constMonster", 6);
+                startActivity(hardcoreGame);
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        backgroundSound.stop();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        backgroundSound.stop();
     }
 
 }
