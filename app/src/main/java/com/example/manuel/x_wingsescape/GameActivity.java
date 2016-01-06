@@ -24,6 +24,7 @@ public class GameActivity extends AppCompatActivity {
     float diffx, diffy;
     int persoX;
     int persoY;
+    int nbcoups = 0;
 
 
     @Override
@@ -167,7 +168,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
 
-
+        nbcoups++;
 
         this.update(rows, columns);
     }
