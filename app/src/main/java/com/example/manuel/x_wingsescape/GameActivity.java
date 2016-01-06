@@ -151,8 +151,21 @@ public class GameActivity extends AppCompatActivity {
         if (move == "up") {
             grid[persoX - 1][persoY] = grid[persoX][persoY] + grid[persoX - 1][persoY];
             persoX = persoX - 1;
+            grid[temPositionX][persoY] = 0;
+        } else if (move == "down") {
+            grid[persoX + 1][persoY] = grid[persoX][persoY] + grid[persoX + 1][persoY];
+            persoX = persoX + 1;
+            grid[temPositionX][persoY] = 0;
+        } else if (move == "left") {
+            grid[persoX][persoY - 1] = grid[persoX][persoY] + grid[persoX][persoY - 1];
+            persoY = persoY - 1;
+            grid[persoX][temPositionY] = 0;
+        } else if (move == "right") {
+            grid[persoX][persoY + 1] = grid[persoX][persoY] + grid[persoX][persoY + 1];
+            persoY = persoY + 1;
+            grid[persoX][temPositionY] = 0;
         }
-        grid[temPositionX][persoY] = 0;
+
 
 
 
@@ -181,7 +194,7 @@ public class GameActivity extends AppCompatActivity {
                 //if left to right sweep event on screen
                 if (x1 < x2 && Math.abs(diffy) < Math.abs(diffx))
                 {
-                    if (grid[persoX + 1][persoY] != 10) {
+                    if (grid[persoX][persoY + 1] != 10) {
                         this.move(15, 10, "right");
                     }
                 }
@@ -189,7 +202,7 @@ public class GameActivity extends AppCompatActivity {
                 // if right to left sweep event on screen
                 if (x2 < x1 && Math.abs(diffy) < Math.abs(diffx))
                 {
-                    if (grid[persoX - 1][persoY] != 10) {
+                    if (grid[persoX][persoY - 1] != 10) {
                         this.move(15, 10, "left");
                     }
                 }
@@ -197,7 +210,7 @@ public class GameActivity extends AppCompatActivity {
                 // if UP to Down sweep event on screen
                 if (y1 < y2 && Math.abs(diffx) < Math.abs(diffy))
                 {
-                    if (grid[persoX][persoY + 1] != 10) {
+                    if (grid[persoX + 1][persoY] != 10) {
                         this.move(15, 10, "down");
                     }
                 }
@@ -205,7 +218,7 @@ public class GameActivity extends AppCompatActivity {
                 //if Down to UP sweep event on screen
                 if (y2 < y1 && Math.abs(diffx) < Math.abs(diffy))
                 {
-                    if (grid[persoX][persoY - 1] != 10) {
+                    if (grid[persoX - 1][persoY] != 10) {
                         this.move(15, 10, "up");
                     }
                 }
