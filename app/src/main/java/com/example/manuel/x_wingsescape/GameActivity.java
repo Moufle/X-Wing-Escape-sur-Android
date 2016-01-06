@@ -192,34 +192,41 @@ public class GameActivity extends AppCompatActivity {
                 diffy = y2-y1;
 
                 //if left to right sweep event on screen
-                if (x1 < x2 && Math.abs(diffy) < Math.abs(diffx))
-                {
-                    if (grid[persoX][persoY + 1] != 10) {
-                        this.move(15, 10, "right");
+                if (x1 < x2 && Math.abs(diffy) < Math.abs(diffx)) {
+                    if (persoY < 9) {
+                        if (grid[persoX][persoY + 1] != 10) {
+                            this.move(15, 10, "right");
+                        }
                     }
                 }
 
                 // if right to left sweep event on screen
                 if (x2 < x1 && Math.abs(diffy) < Math.abs(diffx))
                 {
-                    if (grid[persoX][persoY - 1] != 10) {
-                        this.move(15, 10, "left");
+                    if (persoY > 0) {
+                        if (grid[persoX][persoY - 1] != 10) {
+                            this.move(15, 10, "left");
+                        }
                     }
                 }
 
                 // if UP to Down sweep event on screen
                 if (y1 < y2 && Math.abs(diffx) < Math.abs(diffy))
                 {
-                    if (grid[persoX + 1][persoY] != 10) {
-                        this.move(15, 10, "down");
+                    if (persoX < 14) {
+                        if (grid[persoX + 1][persoY] != 10) {
+                            this.move(15, 10, "down");
+                        }
                     }
                 }
 
                 //if Down to UP sweep event on screen
                 if (y2 < y1 && Math.abs(diffx) < Math.abs(diffy))
                 {
-                    if (grid[persoX - 1][persoY] != 10) {
-                        this.move(15, 10, "up");
+                    if (persoX > 0) {
+                        if (grid[persoX - 1][persoY] != 10) {
+                            this.move(15, 10, "up");
+                        }
                     }
                 }
                 break;
