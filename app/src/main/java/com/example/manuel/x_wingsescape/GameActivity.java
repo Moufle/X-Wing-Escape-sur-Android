@@ -253,4 +253,9 @@ public class GameActivity extends AppCompatActivity {
         GameSound.start();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        GameSound.stop();
+    }
 }
