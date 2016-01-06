@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
+import android.view.MotionEvent;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -17,6 +19,12 @@ public class GameActivity extends AppCompatActivity {
     int constObject = 0;
     int constMonster = 0;
     MediaPlayer GameSound;
+    float x1,x2;
+    float y1, y2;
+    float diffx, diffy;
+    int persoX;
+    int persoY;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +57,8 @@ public class GameActivity extends AppCompatActivity {
             }
         }
 
-        int persoX = (int) (Math.random() * 12 + 1);
-        int persoY = (int) (Math.random() * 6 + 1);
+        persoX = (int) (Math.random() * 12 + 1);
+        persoY = (int) (Math.random() * 6 + 1);
 
         grid[persoX][persoY] = 1;
 
@@ -134,6 +142,86 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private void move(int rows, int columns, String move) {
+
+        int temPositionX = persoX;
+        int temPositionY = persoY;
+        if (move == "up") {
+            grid[persoX - 1][persoY] = grid[persoX][persoY] + grid[persoX - 1][persoY];
+            persoX = persoX - 1;
+        }
+        grid[temPositionX][persoY] = 0;
+
+
+
+        this.update(rows, columns);
+    }
+
+    public boolean onTouchEvent(MotionEvent touchEvent)
+    {
+        switch (touchEvent.getAction())
+        {
+            // when user first touches the screen we get x and y coordinate
+            case MotionEvent.ACTION_DOWN:
+            {
+                x1 = touchEvent.getX();
+                y1 = touchEvent.getY();
+                break;
+            }
+            case MotionEvent.ACTION_UP:
+            {
+                x2 = touchEvent.getX();
+                y2 = touchEvent.getY();
+
+                diffx = x2-x1;
+                diffy = y2-y1;
+
+                //if left to right sweep event on screen
+                if (x1 < x2 && Math.abs(diffy) < Math.abs(diffx))
+                {
+                    if (grid[persoX + 1][persoY] != 10) {
+                        this.move(15, 10, "right");
+                    }
+                }
+
+                // if right to left sweep event on screen
+                if (x2 < x1 && Math.abs(diffy) < Math.abs(diffx))
+                {
+                    if (grid[persoX - 1][persoY] != 10) {
+                        this.move(15, 10, "left");
+                    }
+                }
+
+                // if UP to Down sweep event on screen
+                if (y1 < y2 && Math.abs(diffx) < Math.abs(diffy))
+                {
+                    if (grid[persoX][persoY + 1] != 10) {
+                        this.move(15, 10, "down");
+                    }
+                }
+
+                //if Down to UP sweep event on screen
+                if (y2 < y1 && Math.abs(diffx) < Math.abs(diffy))
+                {
+                    if (grid[persoX][persoY - 1] != 10) {
+                        this.move(15, 10, "up");
+                    }
+                }
+                break;
+            }
+        }
+        return false;
+    }
+
+    private double[] c2r(double x, double y) {
+        double res[] = new double[2];
+        double r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+        double t = Math.atan2(y, x);
+        res[0] = r;
+        res[1] = t;
+        return res;
     }
 
     @Override
