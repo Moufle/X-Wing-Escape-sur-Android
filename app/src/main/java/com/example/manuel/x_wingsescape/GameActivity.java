@@ -168,27 +168,29 @@ public class GameActivity extends AppCompatActivity {
         }
 
 
+        this.chase(15, 10);
+
         nbcoups++;
 
         this.update(rows, columns);
     }
 
-    private void chase(int rows, int columns , String chase){
+    private void chase(int rows, int columns){
 
-        //Trouver la position des monstres
+        int i = 0;
+        int [][] monsters = new int[i][];
+
         for (int x = 0; x < rows; x++) {
             for (int y = 0; y < columns; y++) {
 
                 if (grid[x][y] == 5) {
 
+                    monsters[i][0] = x;
+                    monsters[i][1] = y;
 
-
+                    i ++;
                 }
-
             }
-
-
-            //Déplacer les monstres
         }
     }
 
@@ -216,6 +218,7 @@ public class GameActivity extends AppCompatActivity {
                     if (persoY < 9) {
                         if (grid[persoX][persoY + 1] != 10) {
                             this.move(15, 10, "right");
+
                         }
                     }
                 }
