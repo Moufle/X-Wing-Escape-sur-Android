@@ -19,11 +19,6 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        backgroundSound = MediaPlayer.create(this.getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.home));
-        backgroundSound.setLooping(true);
-        backgroundSound.setVolume(75, 75);
-        backgroundSound.start();
-
         Button easy = (Button) this.findViewById(R.id.easyMode);
         Button medium = (Button) this.findViewById(R.id.mediumMode);
         Button hard = (Button) this.findViewById(R.id.hardcoreMode);
@@ -80,4 +75,12 @@ public class MainActivity extends AppCompatActivity {
         backgroundSound.stop();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        backgroundSound = MediaPlayer.create(this.getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.home));
+        backgroundSound.setLooping(true);
+        backgroundSound.setVolume(75, 75);
+        backgroundSound.start();
+    }
 }

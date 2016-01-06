@@ -1,18 +1,22 @@
 package com.example.manuel.x_wingsescape;
 
 import android.annotation.TargetApi;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
 
 import java.util.Random;
 
-public class GameActivity extends MainActivity {
+public class GameActivity extends AppCompatActivity {
 
     int[][] grid = null;
     int constObject = 0;
     int constMonster = 0;
+    MediaPlayer GameSound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,18 +136,13 @@ public class GameActivity extends MainActivity {
         }
     }
 
-    private void printFrames (int rows, int columns, int[][] grid, Random r) {
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                grid[i][j] = r.nextInt(2 + 1);
-                System.out.print(" " + grid[i][j]);
-
-            }
-
-            System.out.println("");
-
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        GameSound = MediaPlayer.create(this.getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.game));
+        GameSound.setLooping(true);
+        GameSound.setVolume(75, 75);
+        GameSound.start();
     }
 
 }
