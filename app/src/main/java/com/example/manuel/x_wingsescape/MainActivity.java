@@ -1,42 +1,56 @@
 package com.example.manuel.x_wingsescape;
 
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.content.Intent;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int [][] memoire;
+    MediaPlayer backgroundSound;
+    MediaPlayer clickSound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.game);
-        GameActivity gameActivity = new GameActivity();
 
+        setContentView(R.layout.activity_main);
 
+        backgroundSound = MediaPlayer.create(this.getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.home));
+        backgroundSound.setLooping(true);
+        backgroundSound.setVolume(75, 75);
+        backgroundSound.start();
+
+        Button easy = (Button) this.findViewById(R.id.easyMode);
+        Button medium = (Button) this.findViewById(R.id.mediumMode);
+        Button hard = (Button) this.findViewById(R.id.hardcoreMode);
+
+        easy.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                clickSound = MediaPlayer.create(getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.click_sound));
+                clickSound.setVolume(90, 90);
+                clickSound.start();
+            }
+        });
+
+        medium.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                clickSound = MediaPlayer.create(getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.click_sound));
+                clickSound.setVolume(90, 90);
+                clickSound.start();
+            }
+        });
+
+        hard.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                clickSound = MediaPlayer.create(getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.click_sound));
+                clickSound.setVolume(90, 90);
+                clickSound.start();
+            }
+        });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
