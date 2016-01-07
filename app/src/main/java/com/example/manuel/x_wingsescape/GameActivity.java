@@ -74,7 +74,7 @@ public class GameActivity extends AppCompatActivity {
         grid[persoX - 1][persoY + 1] = 4;
 
         int constMonster = this.constMonster;
-        for(int nbMonster = constMonster; nbMonster >= 0; nbMonster --) {
+        for(int nbMonster = constMonster; nbMonster > 0; nbMonster --) {
             int MonsterX;
             int MonsterY;
 
@@ -88,8 +88,8 @@ public class GameActivity extends AppCompatActivity {
             }
         }
 
-        int constObjsct = this.constObject;
-        for(int nbObject = constObjsct; nbObject >= 0; nbObject --) {
+        int constObject = this.constObject;
+        for(int nbObject = constObject; nbObject > 0; nbObject --) {
             int ObjectX;
             int ObjectY;
 
