@@ -189,19 +189,19 @@ public class GameActivity extends AppCompatActivity {
                             || Vecteur[1] == ((3 * Math.PI) / 4)
                             || Vecteur[1] == ((-3 * Math.PI) / 4)){
 
-                        Vecteur[1] += 0.05;
+                        Vecteur[1] += 0.5;
                     }
 
-                    if (Vecteur[1] > (-Math.PI / 4) && Vecteur[1] < (Math.PI / 4)){
+                    if (((Vecteur[1] > (-Math.PI / 4)) && (Vecteur[1] <= 0)) || ((Vecteur[1] < (Math.PI / 4)) && (Vecteur[1] >= 0))){
                         grid[x + 1][y] = grid[x + 1][y] + grid[x][y];
                         grid[x][y] = 0;
-                    } else if (Vecteur[1] > ((-3 * Math.PI) / 4) && Vecteur[1] < (-Math.PI / 4)){
+                    } else if ((Vecteur[1] > ((-3 * Math.PI) / 4)) && (Vecteur[1] < (-Math.PI / 4))){
                         grid[x][y - 1] = grid[x][y - 1] + grid[x][y];
                         grid[x][y] = 0;
-                    } else if (Vecteur[1] > ((3 * Math.PI) / 4) && Vecteur[1] < ((-3 * Math.PI) / 4)){
+                    } else if (((Vecteur[1] > ((3 * Math.PI) / 4)) && (Vecteur[1] <= Math.PI)) || ((Vecteur[1] < ((-3 * Math.PI) / 4)) && (Vecteur[1] >= (-Math.PI)))){
                         grid[x - 1][y] = grid[x - 1][y] + grid[x][y];
                         grid[x][y] = 0;
-                    } else if (Vecteur[1] > ( Math.PI / 4) && Vecteur[1] < ((3 * Math.PI) / 4)){
+                    } else if ((Vecteur[1] > ( Math.PI / 4)) && (Vecteur[1] < ((3 * Math.PI) / 4))){
                         grid[x][y + 1] = grid[x][y + 1] + grid[x][y];
                         grid[x][y] = 0;
                     }
