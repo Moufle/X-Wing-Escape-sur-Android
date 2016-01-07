@@ -1,6 +1,8 @@
 package com.example.manuel.x_wingsescape;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -26,6 +28,8 @@ public class GameActivity extends AppCompatActivity {
     int persoY;
     int nbcoups = 0;
     double[] Vecteur = null;
+    int checkMonsters =  0;
+    String mode = null;
 
 
     @Override
@@ -41,6 +45,7 @@ public class GameActivity extends AppCompatActivity {
             } else {
                 constObject = extras.getInt("constObject");
                 constMonster = extras.getInt("constMonster");
+                mode = extras.getString("mode");
             }
         } else {
             constObject = (int) savedInstanceState.getSerializable("nbObject");
@@ -174,13 +179,24 @@ public class GameActivity extends AppCompatActivity {
         nbcoups++;
 
         this.update(rows, columns);
+
+        if(checkMonsters == 0 ){
+
+            Intent victory= new Intent(GameActivity.this, VictoryActivity.class);
+            victory.putExtra("mode", 12);
+            startActivity(victory);
+        }
     }
 
     private void chase(int rows, int columns){
 
+        checkMonsters = 0;
+
         for (int x = 0; x < rows; x++) {
             for (int y = 0; y < columns; y++) {
                 if (grid[x][y] == 5) {
+
+                    checkMonsters = 1;
 
                     Vecteur = this.c2r(persoX - x, persoY - y);
 
@@ -191,17 +207,23 @@ public class GameActivity extends AppCompatActivity {
 
                         Vecteur[1] += 0.5;
                     }
-
+                    //Down
                     if (((Vecteur[1] > (-Math.PI / 4)) && (Vecteur[1] <= 0)) || ((Vecteur[1] < (Math.PI / 4)) && (Vecteur[1] >= 0))){
                         grid[x + 1][y] = grid[x + 1][y] + grid[x][y];
                         grid[x][y] = 0;
-                    } else if ((Vecteur[1] > ((-3 * Math.PI) / 4)) && (Vecteur[1] < (-Math.PI / 4))){
+                    }
+                    //Left
+                    else if ((Vecteur[1] > ((-3 * Math.PI) / 4)) && (Vecteur[1] < (-Math.PI / 4))){
                         grid[x][y - 1] = grid[x][y - 1] + grid[x][y];
                         grid[x][y] = 0;
-                    } else if (((Vecteur[1] > ((3 * Math.PI) / 4)) && (Vecteur[1] <= Math.PI)) || ((Vecteur[1] < ((-3 * Math.PI) / 4)) && (Vecteur[1] >= (-Math.PI)))){
+                    }
+                    //Up
+                    else if (((Vecteur[1] > ((3 * Math.PI) / 4)) && (Vecteur[1] <= Math.PI)) || ((Vecteur[1] < ((-3 * Math.PI) / 4)) && (Vecteur[1] >= (-Math.PI)))){
                         grid[x - 1][y] = grid[x - 1][y] + grid[x][y];
                         grid[x][y] = 0;
-                    } else if ((Vecteur[1] > ( Math.PI / 4)) && (Vecteur[1] < ((3 * Math.PI) / 4))){
+                    }
+                    //Right
+                    else if ((Vecteur[1] > ( Math.PI / 4)) && (Vecteur[1] < ((3 * Math.PI) / 4))){
                         grid[x][y + 1] = grid[x][y + 1] + grid[x][y];
                         grid[x][y] = 0;
                     }
@@ -296,5 +318,12 @@ public class GameActivity extends AppCompatActivity {
         protected void onPause() {
         super.onPause();
         GameSound.stop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Intent i = new Intent(this, VictoryActivity.class);
+        startActivity(i);
+        super.onDestroy();
     }
 }

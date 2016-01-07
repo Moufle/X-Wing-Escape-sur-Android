@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent easyGame = new Intent(MainActivity.this, GameActivity.class);
                 easyGame.putExtra("constObject", 12);
                 easyGame.putExtra("constMonster", 6);
+                easyGame.putExtra("mode", "easy");
                 startActivity(easyGame);
             }
         });
