@@ -42,6 +42,7 @@ public class GameActivity extends AppCompatActivity {
             if(extras == null) {
                 constObject = 5;
                 constMonster = 5;
+                mode = null;
             } else {
                 constObject = extras.getInt("constObject");
                 constMonster = extras.getInt("constMonster");
@@ -50,6 +51,7 @@ public class GameActivity extends AppCompatActivity {
         } else {
             constObject = (int) savedInstanceState.getSerializable("nbObject");
             constMonster = (int) savedInstanceState.getSerializable("nbMonster");
+            mode = (String) savedInstanceState.getSerializable("mode");
         }
 
         this.generate(15, 10);
@@ -183,7 +185,9 @@ public class GameActivity extends AppCompatActivity {
         if(checkMonsters == 0 ){
 
             Intent victory= new Intent(GameActivity.this, VictoryActivity.class);
-            victory.putExtra("mode", 12);
+            victory.putExtra("mode", mode);
+            victory.putExtra("constObject", constObject);
+            victory.putExtra("constMonster", constMonster);
             startActivity(victory);
         }
     }
