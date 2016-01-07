@@ -25,6 +25,7 @@ public class GameActivity extends AppCompatActivity {
     int persoX;
     int persoY;
     int nbcoups = 0;
+    double[] Vecteur = null;
 
 
     @Override
@@ -177,18 +178,34 @@ public class GameActivity extends AppCompatActivity {
 
     private void chase(int rows, int columns){
 
-        int i = 0;
-        int [][] monsters = new int[i][];
-
         for (int x = 0; x < rows; x++) {
             for (int y = 0; y < columns; y++) {
-
                 if (grid[x][y] == 5) {
 
-                    monsters[i][0] = x;
-                    monsters[i][1] = y;
+                    Vecteur = this.c2r(persoX - x, persoY - y);
 
-                    i ++;
+                    if(Vecteur[1] == (Math.PI / 4)
+                            || Vecteur[1] == (- Math.PI / 4)
+                            || Vecteur[1] == ((3 * Math.PI) / 4)
+                            || Vecteur[1] == ((-3 * Math.PI) / 4)){
+
+                        Vecteur[1] += 0.05;
+                    }
+
+                    if (Vecteur[1] > (-Math.PI / 4) && Vecteur[1] < (Math.PI / 4)){
+                        grid[x + 1][y] = grid[x + 1][y] + grid[x][y];
+                        grid[x][y] = 0;
+                    } else if (Vecteur[1] > ((-3 * Math.PI) / 4) && Vecteur[1] < (-Math.PI / 4)){
+                        grid[x][y - 1] = grid[x][y - 1] + grid[x][y];
+                        grid[x][y] = 0;
+                    } else if (Vecteur[1] > ((3 * Math.PI) / 4) && Vecteur[1] < (-3 *Math.PI / 4)){
+                        grid[x - 1][y] = grid[x - 1][y] + grid[x][y];
+                        grid[x][y] = 0;
+                    } else if (Vecteur[1] < ((3 * Math.PI) / 4) && Vecteur[1] > (Math.PI / 4)){
+                        grid[x][y + 1] = grid[x][y + 1] + grid[x][y];
+                        grid[x][y] = 0;
+                    }
+
                 }
             }
         }
@@ -218,7 +235,6 @@ public class GameActivity extends AppCompatActivity {
                     if (persoY < 9) {
                         if (grid[persoX][persoY + 1] != 10) {
                             this.move(15, 10, "right");
-
                         }
                     }
                 }
