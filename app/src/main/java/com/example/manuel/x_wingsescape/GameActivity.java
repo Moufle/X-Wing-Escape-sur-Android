@@ -123,7 +123,7 @@ public class GameActivity extends AppCompatActivity {
                     case 0 :
                         int caseID = getResources().getIdentifier("frame" + (x+1) + "_" + (y+1), "id", getPackageName());
                         iv = (ImageView) findViewById(caseID);
-                        iv.setImageResource(R.drawable.case_xhdpi);
+                        iv.setImageResource(R.drawable.ncase_xhdpi);
                         break;
                     case 1 :
                         int xwingID = getResources().getIdentifier("frame" + (x+1) + "_" + (y+1), "id", getPackageName());
