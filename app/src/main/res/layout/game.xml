@@ -1244,4 +1244,16 @@
         android:layout_toRightOf="@+id/frame1_9"
         android:layout_toEndOf="@+id/frame1_9" />
 
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="S K I P"
+        android:id="@+id/skip"
+        android:background="@drawable/buttonshape"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:textColor="#FFFFFF"
+        android:clickable="true"/>
+
 </RelativeLayout>

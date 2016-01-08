@@ -9,6 +9,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.view.MotionEvent;
 import android.widget.Toast;
@@ -29,8 +31,10 @@ public class GameActivity extends AppCompatActivity {
     int nbcoups = 0;
     double[] Vecteur = null;
     int checkMonsters =  0;
+    int checkPerso =  1;
     String mode = null;
     MediaPlayer ExploSound;
+    MediaPlayer clickSound;
 
 
     @Override
@@ -56,6 +60,19 @@ public class GameActivity extends AppCompatActivity {
         }
 
         this.generate(15, 10);
+
+        Button skip = (Button) this.findViewById(R.id.skip);
+
+        skip.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                clickSound = MediaPlayer.create(getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.click_sound));
+                clickSound.setVolume(50, 50);
+                clickSound.start();
+
+                chase(15, 10);
+                update(15, 10);
+            }
+        });
     }
 
     public void generate(int rows, int columns) {
@@ -208,11 +225,21 @@ public class GameActivity extends AppCompatActivity {
             victory.putExtra("constMonster", constMonster);
             startActivity(victory);
         }
+
+        if(checkPerso == 0 ){
+
+            Intent defeat= new Intent(GameActivity.this, DefeatActivity.class);
+            defeat.putExtra("mode", mode);
+            defeat.putExtra("constObject", constObject);
+            defeat.putExtra("constMonster", constMonster);
+            startActivity(defeat);
+        }
     }
 
     private void chase(int rows, int columns){
 
         checkMonsters = 0;
+        checkPerso = 1;
 
         for (int x = 0; x < rows; x++) {
             for (int y = 0; y < columns; y++) {
@@ -256,6 +283,14 @@ public class GameActivity extends AppCompatActivity {
                 if (grid[x][y] == 7) {
 
                     checkMonsters = 1;
+                }
+            }
+        }
+        for (int x = 0; x < rows; x++) {
+            for (int y = 0; y < columns; y++) {
+                if (grid[x][y] == 8 || grid[x][y] == 15) {
+
+                    checkPerso = 0;
                 }
             }
         }
@@ -350,7 +385,7 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        Intent i = new Intent(this, VictoryActivity.class);
+        Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         super.onDestroy();
     }

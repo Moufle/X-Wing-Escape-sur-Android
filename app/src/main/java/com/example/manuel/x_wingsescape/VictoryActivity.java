@@ -13,6 +13,8 @@ public class VictoryActivity extends AppCompatActivity {
     String mode = null;
     int constObject = 0;
     int constMonster = 0;
+    MediaPlayer VictorySound;
+    MediaPlayer clickSound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,10 @@ public class VictoryActivity extends AppCompatActivity {
         replay.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
+                clickSound = MediaPlayer.create(getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.click_sound));
+                clickSound.setVolume(50, 50);
+                clickSound.start();
+
                 Intent restartGame = new Intent(VictoryActivity.this, GameActivity.class);
                 restartGame.putExtra("constObject", constObject);
                 restartGame.putExtra("constMonster", constMonster);
@@ -48,5 +54,20 @@ public class VictoryActivity extends AppCompatActivity {
                 startActivity(restartGame);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        VictorySound = MediaPlayer.create(this.getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.victory));
+        VictorySound.setLooping(true);
+        VictorySound.setVolume(75, 75);
+        VictorySound.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        VictorySound.stop();
     }
 }
