@@ -30,6 +30,7 @@ public class GameActivity extends AppCompatActivity {
     double[] Vecteur = null;
     int checkMonsters =  0;
     String mode = null;
+    MediaPlayer ExploSound;
 
 
     @Override
@@ -89,7 +90,7 @@ public class GameActivity extends AppCompatActivity {
             MonsterY = (int) (Math.random() * columns);
 
             if (grid[MonsterX][MonsterY] == 0) {
-                grid[MonsterX][MonsterY] = 5;
+                grid[MonsterX][MonsterY] = 7;
             } else {
                 nbMonster ++;
             }
@@ -137,7 +138,7 @@ public class GameActivity extends AppCompatActivity {
                         iv = (ImageView) findViewById(xwingID);
                         iv.setImageResource(R.drawable.xwing);
                         break;
-                    case 5 :
+                    case 7 :
                         int tiefighterID = getResources().getIdentifier("frame" + (x+1) + "_" + (y+1), "id", getPackageName());
                         iv = (ImageView) findViewById(tiefighterID);
                         iv.setImageResource(R.drawable.tie_fighter);
@@ -147,7 +148,24 @@ public class GameActivity extends AppCompatActivity {
                         iv = (ImageView) findViewById(objectID);
                         iv.setImageResource(R.drawable.debris);
                         break;
-
+                    case 14 :
+                        int exploID = getResources().getIdentifier("frame" + (x+1) + "_" + (y+1), "id", getPackageName());
+                        iv = (ImageView) findViewById(exploID);
+                        iv.setImageResource(R.drawable.boom);
+                        ExploSound = MediaPlayer.create(getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.explosion));
+                        ExploSound.setVolume(80, 80);
+                        ExploSound.start();
+                        grid[x][y] = 10;
+                        break;
+                    case 17 :
+                        int ColisionID = getResources().getIdentifier("frame" + (x+1) + "_" + (y+1), "id", getPackageName());
+                        iv = (ImageView) findViewById(ColisionID);
+                        iv.setImageResource(R.drawable.boom);
+                        ExploSound = MediaPlayer.create(getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.explosion));
+                        ExploSound.setVolume(80, 80);
+                        ExploSound.start();
+                        grid[x][y] = 10;
+                        break;
                 }
             }
         }
@@ -198,9 +216,7 @@ public class GameActivity extends AppCompatActivity {
 
         for (int x = 0; x < rows; x++) {
             for (int y = 0; y < columns; y++) {
-                if (grid[x][y] == 5) {
-
-                    checkMonsters = 1;
+                if (grid[x][y] == 7) {
 
                     Vecteur = this.c2r(persoX - x, persoY - y);
 
@@ -232,6 +248,14 @@ public class GameActivity extends AppCompatActivity {
                         grid[x][y] = 0;
                     }
 
+                }
+            }
+        }
+        for (int x = 0; x < rows; x++) {
+            for (int y = 0; y < columns; y++) {
+                if (grid[x][y] == 7) {
+
+                    checkMonsters = 1;
                 }
             }
         }
