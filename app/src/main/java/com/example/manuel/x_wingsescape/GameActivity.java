@@ -1,15 +1,19 @@
 package com.example.manuel.x_wingsescape;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.view.MotionEvent;
+
+import java.util.Objects;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -39,10 +43,6 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.game);
 
         mPref = getSharedPreferences("highScore", 0);
-
-        //SharedPreferences.Editor editor = mPref.edit();
-        //editor.clear();
-        //editor.commit();
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -97,7 +97,7 @@ public class GameActivity extends AppCompatActivity {
 
                 if(checkPerso == 0 ){
 
-                    int Totalscore = ((nbcoups * 10) * constMonster) + 0;
+                    int Totalscore = ((nbcoups * 10) * constMonster);
 
                     int highScore = mPref.getInt("highScore", 0);
 
@@ -233,23 +233,24 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     private void move(int rows, int columns, String move) {
 
         int temPositionX = persoX;
         int temPositionY = persoY;
-        if (move == "up") {
+        if (Objects.equals(move, "up")) {
             grid[persoX - 1][persoY] = grid[persoX][persoY] + grid[persoX - 1][persoY];
             persoX = persoX - 1;
             grid[temPositionX][persoY] = 0;
-        } else if (move == "down") {
+        } else if (Objects.equals(move, "down")) {
             grid[persoX + 1][persoY] = grid[persoX][persoY] + grid[persoX + 1][persoY];
             persoX = persoX + 1;
             grid[temPositionX][persoY] = 0;
-        } else if (move == "left") {
+        } else if (Objects.equals(move, "left")) {
             grid[persoX][persoY - 1] = grid[persoX][persoY] + grid[persoX][persoY - 1];
             persoY = persoY - 1;
             grid[persoX][temPositionY] = 0;
-        } else if (move == "right") {
+        } else if (Objects.equals(move, "right")) {
             grid[persoX][persoY + 1] = grid[persoX][persoY] + grid[persoX][persoY + 1];
             persoY = persoY + 1;
             grid[persoX][temPositionY] = 0;
@@ -325,7 +326,7 @@ public class GameActivity extends AppCompatActivity {
                             || Vecteur[1] == ((3 * Math.PI) / 4)
                             || Vecteur[1] == ((-3 * Math.PI) / 4)){
 
-                        Vecteur[1] += 0.5;
+                        Vecteur[1] += 0.1;
                     }
                     //Down
                     if (((Vecteur[1] > (-Math.PI / 4)) && (Vecteur[1] <= 0)) || ((Vecteur[1] < (Math.PI / 4)) && (Vecteur[1] >= 0))){
@@ -442,7 +443,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void calculateScore() {
-        int Totalscore = nbcoups;
+        //int Totalscore = nbcoups;
     }
 
     private void setHighscore() {
@@ -450,18 +451,6 @@ public class GameActivity extends AppCompatActivity {
         //SharedPreferences.Editor prefsEditor = myPrefs.edit();
         //prefsEditor.putInt("nbcoups", HIGHEST_SCORE);
         //prefsEditor.commit();
-
-
-        //SharedPreferences myPrefs = this.getSharedPreferences("myPrefs", MODE_WORLD_READABLE);
-        //String highestScore = myPrefs.getString(MY_SCORE_KEY, "nothing");
-
-        //SharedPreferences mPref = getSharedPreferences("prefsStandard", 0);
-        //int c = mPref.getInt("prefsStandard", 0);
-        //c++; // On incrémente
-        //SharedPreferences.Editor e = mPref.edit();
-        //e.putInt("prefsStandard", c);
-        //e.apply();
-        //nbRun.setText(c + " fois");
     }
 
     @Override
