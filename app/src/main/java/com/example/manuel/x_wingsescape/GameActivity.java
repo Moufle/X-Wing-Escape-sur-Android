@@ -70,9 +70,52 @@ public class GameActivity extends AppCompatActivity {
                 clickSound = MediaPlayer.create(getBaseContext(), Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.click_sound));
                 clickSound.setVolume(50, 50);
                 clickSound.start();
-
+                nbcoups++;
                 chase(15, 10);
                 update(15, 10);
+                if(checkMonsters == 0 ){
+
+                    int Totalscore = nbcoups;
+
+                    int highScore = mPref.getInt("highScore", 0);
+
+                    if (Totalscore > highScore){
+                        SharedPreferences.Editor e = mPref.edit();
+                        e.putInt("highScore", Totalscore);
+                        highScore = Totalscore;
+                        e.apply();
+                    }
+
+                    Intent victory= new Intent(GameActivity.this, VictoryActivity.class);
+                    victory.putExtra("mode", mode);
+                    victory.putExtra("constObject", constObject);
+                    victory.putExtra("constMonster", constMonster);
+                    victory.putExtra("Totalscore", Totalscore);
+                    victory.putExtra("highScore", highScore);
+                    startActivity(victory);
+                }
+
+                if(checkPerso == 0 ){
+
+                    int Totalscore = nbcoups;
+
+                    int highScore = mPref.getInt("highScore", 0);
+
+                    if (Totalscore > highScore){
+                        SharedPreferences.Editor e = mPref.edit();
+                        e.putInt("highScore", Totalscore);
+                        highScore = Totalscore;
+                        e.apply();
+                    }
+
+                    Intent defeat= new Intent(GameActivity.this, DefeatActivity.class);
+                    defeat.putExtra("mode", mode);
+                    defeat.putExtra("constObject", constObject);
+                    defeat.putExtra("constMonster", constMonster);
+                    defeat.putExtra("Totalscore", Totalscore);
+                    defeat.putExtra("highScore", highScore);
+                    startActivity(defeat);
+                }
             }
         });
     }
