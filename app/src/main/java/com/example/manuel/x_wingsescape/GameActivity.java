@@ -75,7 +75,7 @@ public class GameActivity extends AppCompatActivity {
                 update(15, 10);
                 if(checkMonsters == 0 ){
 
-                    int Totalscore = nbcoups;
+                    int Totalscore = ((nbcoups * 10) * constMonster) + 300;
 
                     int highScore = mPref.getInt("highScore", 0);
 
@@ -97,7 +97,7 @@ public class GameActivity extends AppCompatActivity {
 
                 if(checkPerso == 0 ){
 
-                    int Totalscore = nbcoups;
+                    int Totalscore = ((nbcoups * 10) * constMonster) + 0;
 
                     int highScore = mPref.getInt("highScore", 0);
 
@@ -266,7 +266,7 @@ public class GameActivity extends AppCompatActivity {
 
         if(checkMonsters == 0 ){
 
-            int Totalscore = nbcoups;
+            int Totalscore = ((nbcoups * 10) * constMonster) + 300;
 
             int highScore = mPref.getInt("highScore", 0);
 
@@ -288,7 +288,7 @@ public class GameActivity extends AppCompatActivity {
 
         if(checkPerso == 0 ){
 
-            int Totalscore = nbcoups;
+            int Totalscore = ((nbcoups * 10) * constMonster) + 0;
 
             int highScore = mPref.getInt("highScore", 0);
 
