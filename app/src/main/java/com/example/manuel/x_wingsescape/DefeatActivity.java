@@ -7,12 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class DefeatActivity extends AppCompatActivity {
 
     String mode = null;
     int constObject = 0;
     int constMonster = 0;
+    int Totalscore = 0;
+    int highScore = 0;
     MediaPlayer DefeatSound;
     MediaPlayer clickSound;
 
@@ -28,16 +31,28 @@ public class DefeatActivity extends AppCompatActivity {
                 constObject = 5;
                 constMonster = 5;
                 mode = null;
+                Totalscore = 0;
+                highScore = 0;
             } else {
                 constObject = extras.getInt("constObject");
                 constMonster = extras.getInt("constMonster");
                 mode = extras.getString("mode");
+                Totalscore = extras.getInt("Totalscore");
+                highScore = extras.getInt("highScore");
             }
         } else {
             constObject = (int) savedInstanceState.getSerializable("nbObject");
             constMonster = (int) savedInstanceState.getSerializable("nbMonster");
             mode = (String) savedInstanceState.getSerializable("mode");
+            Totalscore = (int) savedInstanceState.getSerializable("Totalscore");
+            highScore = (int) savedInstanceState.getSerializable("highScore");
         }
+
+        TextView scoreText = (TextView) this.findViewById(R.id.scoreText);
+        scoreText.setText("Score : " + Totalscore);
+
+        TextView highscoreText = (TextView) this.findViewById(R.id.highscoreText);
+        highscoreText.setText("Highscore : " + highScore);
 
         Button replay = (Button) this.findViewById(R.id.replay);
 

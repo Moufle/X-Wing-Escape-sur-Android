@@ -1,21 +1,15 @@
 package com.example.manuel.x_wingsescape;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.view.MotionEvent;
-import android.widget.Toast;
-
-import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -35,12 +29,20 @@ public class GameActivity extends AppCompatActivity {
     String mode = null;
     MediaPlayer ExploSound;
     MediaPlayer clickSound;
-
+    int Totalscore = 0;
+    int highScore = 0;
+    SharedPreferences mPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game);
+
+        mPref = getSharedPreferences("highScore", 0);
+
+        //SharedPreferences.Editor editor = mPref.edit();
+        //editor.clear();
+        //editor.commit();
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -217,21 +219,49 @@ public class GameActivity extends AppCompatActivity {
 
         this.update(rows, columns);
 
+
+
         if(checkMonsters == 0 ){
+
+            int Totalscore = nbcoups;
+
+            int highScore = mPref.getInt("highScore", 0);
+
+            if (Totalscore > highScore){
+                SharedPreferences.Editor e = mPref.edit();
+                e.putInt("highScore", Totalscore);
+                highScore = Totalscore;
+                e.apply();
+            }
 
             Intent victory= new Intent(GameActivity.this, VictoryActivity.class);
             victory.putExtra("mode", mode);
             victory.putExtra("constObject", constObject);
             victory.putExtra("constMonster", constMonster);
+            victory.putExtra("Totalscore", Totalscore);
+            victory.putExtra("highScore", highScore);
             startActivity(victory);
         }
 
         if(checkPerso == 0 ){
 
+            int Totalscore = nbcoups;
+
+            int highScore = mPref.getInt("highScore", 0);
+
+            if (Totalscore > highScore){
+                SharedPreferences.Editor e = mPref.edit();
+                e.putInt("highScore", Totalscore);
+                highScore = Totalscore;
+                e.apply();
+            }
+
             Intent defeat= new Intent(GameActivity.this, DefeatActivity.class);
             defeat.putExtra("mode", mode);
             defeat.putExtra("constObject", constObject);
             defeat.putExtra("constMonster", constMonster);
+            defeat.putExtra("Totalscore", Totalscore);
+            defeat.putExtra("highScore", highScore);
             startActivity(defeat);
         }
     }
@@ -368,6 +398,29 @@ public class GameActivity extends AppCompatActivity {
         return res;
     }
 
+    private void calculateScore() {
+        int Totalscore = nbcoups;
+    }
+
+    private void setHighscore() {
+        //SharedPreferences myPrefs = this.getSharedPreferences("nbcoups", nbcoups);
+        //SharedPreferences.Editor prefsEditor = myPrefs.edit();
+        //prefsEditor.putInt("nbcoups", HIGHEST_SCORE);
+        //prefsEditor.commit();
+
+
+        //SharedPreferences myPrefs = this.getSharedPreferences("myPrefs", MODE_WORLD_READABLE);
+        //String highestScore = myPrefs.getString(MY_SCORE_KEY, "nothing");
+
+        //SharedPreferences mPref = getSharedPreferences("prefsStandard", 0);
+        //int c = mPref.getInt("prefsStandard", 0);
+        //c++; // On incrémente
+        //SharedPreferences.Editor e = mPref.edit();
+        //e.putInt("prefsStandard", c);
+        //e.apply();
+        //nbRun.setText(c + " fois");
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -389,4 +442,5 @@ public class GameActivity extends AppCompatActivity {
         startActivity(i);
         super.onDestroy();
     }
+
 }
